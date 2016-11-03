@@ -28,7 +28,7 @@ app.use(function(request,response,next){
 var port = process.env.PORT || 8080;
 var router = express.Router();
 
-router.get('/',function(request,response){
+router.route('/').get(function(request,response){
 
 	response.json({message: 'Welcome to /'});
 
@@ -47,6 +47,15 @@ router.route('/project').post(function(request,response){
 
 })
 
+router.route('/project/:id').get(function(request,response){
+
+	Project.findById(request.params.id, function(error,project){
+		if(error) response.send(error);
+		response.json(project);
+	})
+
+})
+
 router.route('/project').get(function(request,response){
 
 	Project.find(function(error,projects){
@@ -55,7 +64,6 @@ router.route('/project').get(function(request,response){
 	})
 
 })
-
 
 app.use('/',router);
 app.listen(port);
