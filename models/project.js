@@ -1,17 +1,13 @@
-/* Project Model */
-
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var projectSchema = new Schema({
-
-	title: String,
-	label: String,
+	name: String,
 	date: { type: Date, default: Date.now },
 	category: String,
 	type: String,
 	status: String,
-	Keywords: Array,
+	keywords: Array,
 	year: Number,
 	assignee: String
 

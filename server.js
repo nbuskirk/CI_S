@@ -24,7 +24,6 @@ app.use(function(request,response,next){
 
 });
 
-
 var port = process.env.PORT || 8080;
 var router = express.Router();
 
@@ -37,8 +36,13 @@ router.route('/').get(function(request,response){
 router.route('/project').post(function(request,response){
 
 	var project = new Project();
-	project.title = request.body.title;
-	project.date = request.body.date;
+	
+	project.name = request.body.name;
+	
+	var keywords = request.body.keywords.split(',');
+	for(i=0;i<keywords.length;i++){
+		project.keywords.push(keywords[i]);
+	}
 
 	project.save(function(err){
 		if(err) response.send(err);
@@ -52,6 +56,15 @@ router.route('/project/:id').get(function(request,response){
 	Project.findById(request.params.id, function(error,project){
 		if(error) response.send(error);
 		response.json(project);
+	})
+
+})
+
+router.route('/project/:id').delete(function(request,response){
+
+	Project.remove({_id: request.params.id}, function(error,project){
+		if(error) response.send(error);
+		response.json({message: 'Project deleted'});
 	})
 
 })
