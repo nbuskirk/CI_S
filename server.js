@@ -11,7 +11,7 @@ mongoose.connect('mongodb://localhost:27017')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(logger('dev'));
+app.use(logger('combined'));
 
 app.use(function(request,response,next){
 
@@ -38,11 +38,22 @@ router.route('/project').post(function(request,response){
 	var project = new Project();
 	
 	project.name = request.body.name;
-	
+	project.date = request.body.date;
+	project.category = request.body.category;
+	project.type = request.body.type;
+	project.status = request.body.status;
+
 	var keywords = request.body.keywords.split(',');
 	for(i=0;i<keywords.length;i++){
 		project.keywords.push(keywords[i]);
 	}
+
+	project.year = request.body.year;
+	project.assignee = request.body.assignee;
+	project.budgetrange = request.body.budgetrange;
+	project.platform = request.body.platform;
+	project.union = request.body.union;
+	project.refyear = request.body.refyear;
 
 	project.save(function(err){
 		if(err) response.send(err);

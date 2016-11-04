@@ -9,7 +9,11 @@ var projectSchema = new Schema({
 	status: String,
 	keywords: Array,
 	year: Number,
-	assignee: String
+	assignee: String,
+	budgetrange: String,
+	platform: String,
+	union: Boolean,
+	refyear: Number
 
 })
 
